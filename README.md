@@ -52,6 +52,13 @@ Alternatively, a debug version without optimizations is also supported:
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 ```
 
+In case you want to create build files which generate logrecords of read operations
+
+```
+cmake -DREAD_LOGRECORDS:BOOL=true ..
+```
+
+
 Finally, to compile:
 
 ```

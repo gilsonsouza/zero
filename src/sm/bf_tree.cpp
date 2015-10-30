@@ -32,6 +32,7 @@
 #include "log.h"
 #include "xct.h"
 #include <logfunc_gen.h>
+#include "eventlog.h"
 
 #include "restart.h"
 
@@ -642,6 +643,8 @@ void bf_tree_m::associate_page(generic_page*&_pp, bf_idx idx, lpid_t page_update
 }
 
 w_rc_t bf_tree_m::_fix_nonswizzled_mainmemorydb(generic_page* parent, generic_page*& page, shpid_t shpid, latch_mode_t mode, bool conditional, bool virgin_page) {
+
+
     bf_idx idx = shpid;
     bf_tree_cb_t &cb = get_cb(idx);
     bf_idx parent_idx = 0;
@@ -692,6 +695,13 @@ w_rc_t bf_tree_m::_fix_nonswizzled(generic_page* parent, generic_page*& page,
 
     // Note in 'restart_m', it does not use this function to load page into buffer pool, because
     // restart_m is driven by in_doubt flag and has different requirements on loading pages.
+
+    //create log records of read pages access 
+#ifdef READ_LOGRECORDS
+    if (mode == LATCH_SH && me()->xct() != NULL){
+        sysevent::log_page_read(shpid, vol);
+     }
+#endif
 
     w_assert1(vol != 0);
     w_assert1(shpid != 0);

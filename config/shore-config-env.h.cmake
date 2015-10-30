@@ -143,6 +143,9 @@
 
 
 /****************** parameters. *****************************/
+/*to create logrecords when read pages*/
+#cmakedefine READ_LOGRECORDS
+
 /*for in-memory str streams*/
 #cmakedefine W_USE_COMPAT_STRSTREAM
 

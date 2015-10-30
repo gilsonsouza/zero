@@ -29,6 +29,19 @@ void sysevent::log_page_read(shpid_t shpid)
     delete lr;
 }
 
+void sysevent::log_page_read(shpid_t shpid, vid_t vid)
+{
+    logrec_t* lr = new logrec_t();
+    lr->header._type = logrec_t::t_fix_page_read;
+    lr->header._cat = 0 | logrec_t::t_status;
+    lpid_t p(vid, shpid);
+    lr->set_pid(p);
+    lr->fill(&p, 0, 0, sizeof(lpid_t) + sizeof(vid_t));
+    W_COERCE(smlevel_0::log->insert(*lr, NULL));
+    delete lr;
+}
+
+
 void sysevent::log_page_write(shpid_t shpid, uint32_t count)
 {
     logrec_t* lr = new logrec_t();

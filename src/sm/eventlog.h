@@ -42,6 +42,7 @@ class sysevent {
 public:
     static void log(logrec_t::kind_t kind);
     static void log_page_read(shpid_t shpid);
+    static void log_page_read(shpid_t shpid, vid_t vid);
     static void log_page_write(shpid_t shpid, uint32_t cnt);
 };
 
