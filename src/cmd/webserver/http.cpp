@@ -458,8 +458,7 @@ std::string HandleKits::mediaRecoveryProgress()
 
         if (pRecovered > 0)
             progress = std::to_string((static_cast<double>(pRecovered)/static_cast<double>(pToRecover))*100);
-        else if (pRecovered >= pToRecover)
-            progress = "100";
+
     return progress;
 }
 
